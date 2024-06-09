@@ -1,13 +1,10 @@
 {
-    // Contenidor amb copilot i Python
-    "build": {
-		"dockerfile": "Dockerfile"
-	},
+    // Name this configuration
+    "name": "Codespace for Skills!",
     "customizations": {
         "vscode": {
             "extensions": [
-                "GitHub.copilot",
-                "ms-python.python"
+                "GitHub.copilot"
             ]
         }
     }
