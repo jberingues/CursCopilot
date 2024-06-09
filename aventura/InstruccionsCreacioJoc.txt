@@ -1,0 +1,83 @@
+# Joc d’aventures de texte amb el que anirem recorrent diferents habitacions 
+# d’un castell. A cada habitació ens hi trobarem vàries portes, de la que en podrem
+# escollir una i anar a una altra habitació. D’aquesta manera podrem recórrer el
+# castell fins que trobem trobar un tresor.
+
+
+Elabora una llista de Python anomenada "pistes" que contingui 10 frases. Cada frase hauria d'insinuar esdeveniments passats, que van des de grans i intensos fins a subestimats i enigmàtics. Assegurat que aquestes pistes siguin prou versàtils com per ser aplicables a qualsevol entorn i estructurades en el format "Hi ha un...".
+
+
+Construeix una llista de Python anomenada "sensacions" amb 12 frases. Cadascuna ha de descriure una experiència sensorial (vista, so, olfacte, tacte, intuïció) que et podries trobar en una habitació d'un castell. Comença aquestes frases amb "Ho veus", "Escoltes", etc., amb l'objectiu de crear una atmosfera misteriosa i immersiva en un joc d'aventures basat en text.
+
+
+Crea una classe Python anomenada "SelectorAleatoriElements". La classe s'ha d'estructurar de la següent manera:
+- Mètode d'inicialització "init": la classe s'inicializa amb una llista que se li passa que representa una col·lecció d'elements.
+- Configura dues variables d'instància dins del constructor: 
+    "elements" per emmagatzemar la llista original d'elements
+    "elements_usats" com una llista buida per fer un seguiment dels elements que s'han seleccionat. 
+- Mètode d'afegir elements "afegir_elements": aquest mètode agafa un element com a paràmetre i l'afegeix a la llista “elements”, permetent expandir el grup de selecció de manera dinàmica. 
+- Mètode d'extracció d'elements aleatoris "extreu_element_aleatori": aquest mètode selecciona un element aleatori de la llista "elements" que no s'ha seleccionat anteriorment. Un cop seleccionat un element, afegeix-lo a la llista "elements_usats". Si s'han utilitzat tots els elements de la llista "elements", restableix la llista "elements_usats" per tornar a fer que tots els elements estiguin disponibles per a la selecció. Gestiona l'escenari en què no hi ha elements per seleccionar reiniciant la llista. 
+- Mètode reiniciar "reset": aquest mètode esborra la llista "elements_usats", fent que tots els elements de la llista "elements" estiguin disponibles de nou per a la seva selecció. 
+
+
+Segueix les directrius donades a continuació per definir la classe "GeneradorPistaSensacio". Això inclou importar la classe "SelectorAleatoriElements", garantir un patró d’instància única, inicialitzar selectors de “pistes” i “sensacions” i definir un mètode "obtenir_pista_sensacio" per combinar pista i sensacions.
+- Comença per importar la classe "SelectorAleatoriElements" al principi del codi.
+- Defineix la classe "GeneradorPistaSensacio". En aquesta classe, implementa el següent:
+    - Al mètode "__new__" de "GeneradorPistaSensacio", comprova si una variable de classe anomenada "_instance" és None.
+        - Si "_instance" és None, crea una nova instància de "GeneradorPistaSensacio" i assigna-la a "_instance".
+        - A més, inicialitza dues variables membres: "selector_pista" i "selector_sensacio". Per a cadascun, crea una nova instància de "SelectorAleatoriElements". Passa la llista "pistes" al constructor de "selector_pista" i la llista "sensacions" al constructor de "selector_sensacio".
+    - Assegura que el mètode "__new__" retorna la variable de classe "_instance".
+    - Defineix un mètode anomenat "obtenir_pista_sensacio" a la classe "GeneradorPistaSensacio". Aquest mètode hauria de:
+        - Cridar el mètode "extreu_item_aleatori" tant a "selector_pista" com a "selector_sensacio".
+        - Assignar els resultats a les variables "pistes" i "sensacions", respectivament.
+        - Retornar una cadena que combina els valors de "pistes" i "sensacions" en una narració o descripció cohesionada.
+
+
+Crea una enumeració anomenada sortida_trobada que tingui "CONTINUA" i "FI" utilitzant el mòdul "enum" integrat de Python
+
+
+Crea una classe Trobada que hereta d'ABC fent-la una classe base abstracta. El mètode corre_trobada està decorat amb @abstractmethod, cosa que el converteix en un mètode abstracte. Això vol dir que qualsevol subclasse de Trobada ha de proporcionar una implementació de corre_trobada. El resultat de corre_trobada ha de retornar un SortidaTrobada.
+
+
+Crea una classe "TrobadaPerDefecte" que hereta de la classe base "Trobada". Quan s'inicialitzi, crearà una instància de GeneradorPistaSensacio i la passarà. 
+A la implementació "corre_trobada": 
+- Cridarà a “extreu_item_aleatori” des de la instància de GeneradorPistaSensacio que va crear quan es va inicialitzar. 
+- Prendrà la sortida de la crida a “extreu_item_aleatori”. 
+- Imprimirà el que es retorna des de “extreu_item_aleatori”. 
+- Tornarà SortidaTrobada.CONTINUA.
+
+
+Crea una classe Habitacio que tingui un nom i una trobada. La trobada i el nom de l’habitacio s'estableixen quan s'inicialitza la classe. La classe Habitacio tindrà un nom i una funció de membre visita_habitacio. Quan es crida a la funció membre visita_habitacio, es cridarà la funció corre_trobada de trobada i es retornarà el resultat.
+
+
+Crea una llista amb nom "habitacions" de 6 objectes “Habitacio”. Cada objecte Habitacio hauria de tenir el nom d'una habitació interessant que hi hauria en un castell. Utilitzeu TrobadaPerDefecte per crear cada "Habitacio".
+
+
+Crea una classe Python anomenada "Castell". Utilitza les següents directrius per a la seva estructura i funcionalitat:
+- Mètode d'inicialització "init": Inicialitza una variable membre anomenada "selector_habitacio" com una nova instància de "SelectorAleatoriElements", passant una llista predefinida "habitacions" al seu constructor.
+- Mètode de seleccionar porta "selecciona_porta": implementa un mètode "selecciona_porta" que esculli aleatòriament un nombre entre 2 i 4 (inclòs) que representen portes.
+    - Mostra el nombre de portes a l'usuari.
+    - Demana a l'usuari que seleccioni un número de porta.
+    - Valida l'entrada de l'usuari. Si no és un número vàlid o està fora de l'interval especificat, mostra un missatge d'error i torna a demanar l'entrada. Repeteix aquest procés fins que rebi una entrada vàlida.
+- Mètode de l'habitació següent "habitacio_seguent":
+    - Crea un mètode "habitacio_seguent" que primer cridi "selecciona_porta".
+    - Després de seleccionar una porta, utilitza "extreu_item_aleatori" del "selector_habitacio" per obtenir una habitació aleatòria.
+    - Mostra a l'usuari el nom de l'habitació escollida.
+    - Crida el mètode "visita_habitació" de la sala escollida i retorna el seu resultat.
+- Mètode de reiniciar "reset": Implementa un mètode anomenat "reset" que crida al mètode de reinici del "selector_habitacio".
+Assegura que totes les sortides impreses d'aquests mètodes estiguin ben formatades i fàcils de llegir per a una millor experiència d'usuari.
+
+
+Crea una classe de Python anomenada "Joc". La classe s'ha d'estructurar de la següent manera:
+- Mètode d'inicialització "init":
+    - Crea una instància de la classe 'Castell' i passa-li les 'habitacions' creades.
+- Mètode 'jugar_joc':
+    - Aquest mètode hauria d'explicar primer l'objectiu del joc a l'usuari: navegar pel castell i trobar el tresor.
+    - Després d'explicar, inicia el bucle de joc dins d'aquest mètode.
+        - El bucle hauria de cridar contínuament a la funció membre ‘propera_habitacio’ de la instància 'Castell'.
+            - Comprova el valor de retorn de ‘propera_habitacio’. 
+                - Si ‘propera_habitacio’ retorna 'SortidaTrobada.CONTINUA', el bucle hauria de continuar cridant a ‘propera_habitacio’.
+                - Si retorna "SortidaTrobada.FI", aleshores:
+                    - Crida la funció membre "reset" de la instància "Castell".
+                    - Mostra un missatge "Game over" a l'usuari.
+                    - Pregunta a l'usuari si vol explorar un castell diferent.
