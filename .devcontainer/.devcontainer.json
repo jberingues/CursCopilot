@@ -1,6 +1,8 @@
 {
     // Contenidor amb copilot i Python
-    "name": "Codespace pel curs",
+    "build": {
+		"dockerfile": "Dockerfile"
+	},
     "customizations": {
         "vscode": {
             "extensions": [
