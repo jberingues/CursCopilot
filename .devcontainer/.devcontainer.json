@@ -1,10 +1,11 @@
 {
     // Contenidor amb copilot i Python
-    "name": "Codespace for Skills!",
+    "name": "Codespace pel curs",
     "customizations": {
         "vscode": {
             "extensions": [
-                "GitHub.copilot"
+                "GitHub.copilot",
+                "ms-python.python"
             ]
         }
     }
