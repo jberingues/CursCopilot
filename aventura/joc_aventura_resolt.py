@@ -2,33 +2,32 @@
 # d’un castell. A cada habitació ens hi trobarem vàries portes, de la que en podrem
 # escollir una i anar a una altra habitació. D’aquesta manera podrem recórrer el
 # castell fins que trobem trobar un tresor.
-
 pistes = [
     "Hi ha un retrat antic amb els ulls que semblen seguir-te.",
     "Hi ha un llibre obert amb una pàgina marcada que parla d'un ritual antic.",
-    "Hi ha un eco suau que ressona des de la profunditat del corredor.",
-    "Hi ha un aroma dolç i desconegut que flueix des de l'habitació següent.",
+    "Hi ha un eco suau que ressona a través dels corredors buits.",
+    "Hi ha un aroma estrany que flueix des de l'habitació següent.",
     "Hi ha un joc d'escacs a mig jugar, com si els jugadors haguessin desaparegut de sobte.",
-    "Hi ha un mirall que no reflecteix la teva imatge.",
-    "Hi ha un mapa antic penjat a la paret amb una zona marcada.",
-    "Hi ha un diari amb l'última entrada escrita fa centenars d'anys.",
-    "Hi ha un calaix mig obert amb una clau d'or dins.",
-    "Hi ha un soroll estrany que sembla venir de darrere la paret."
+    "Hi ha un calaix mig obert amb un mapa antic i desgastat.",
+    "Hi ha un mirall trencat que reflecteix una imatge distorsionada de l'habitació.",
+    "Hi ha un diari amb la darrera entrada escrita fa molts anys.",
+    "Hi ha un armari tancat amb un soroll suau que prové de l'interior.",
+    "Hi ha unes empremtes de pols que semblen indicar una ruta secreta."
 ]
 
 sensacions = [
-    "Ho veus, una llum tènue que es filtra a través d'una finestra trencada.",
-    "Escoltes, el so distant d'una gota d'aigua que cau en una bassa.",
-    "Sents, l'olor de la pols i el moho que omple l'aire.",
-    "Tactes, la rugositat de la pedra freda de les parets.",
-    "Intueixes, una presència estranya que et fa posar la pell de gallina.",
-    "Ho veus, un quadre antic amb la pintura esquerdada i descolorida.",
-    "Escoltes, el xiulet del vent que es cola per les esquerdes de la pedra.",
-    "Sents, l'olor de la fusta vella i humida del mobiliari.",
-    "Tactes, la suavitat del vellut d'un tron d'or desgastat.",
-    "Intueixes, un secret amagat dins les ombres de l'habitació.",
-    "Ho veus, un llibre obert amb pàgines grogues pel pas del temps.",
-    "Escoltes, el creixement sord del foc en una llar de foc pròxima."
+    "Ho veus: una cortina de vellut polsós que oneja lleugerament amb l'aire fred.",
+    "Escoltes: el crepitar distant d'un foc que no pots veure.",
+    "Olores: l'aroma penetrant de la cera de les espelmes que es fonen.",
+    "Sents: la rugositat de la pedra freda sota els teus dits.",
+    "Intueixes: una presència oculta, com si algú més estigués a l'habitació.",
+    "Ho veus: un raig de llum que es filtra a través d'una escletxa en la paret.",
+    "Escoltes: el xiulet del vent que es cola per les finestres tancades.",
+    "Olores: el pols antic i l'humitat de les parets de pedra.",
+    "Sents: el terra de pedra irregular sota els teus peus.",
+    "Intueixes: un canvi subtil en l'aire, com si alguna cosa estigués a punt de passar.",
+    "Ho veus: un reflex en un mirall trencat, massa ràpid per identificar.",
+    "Escoltes: el so suau i inquietant d'una cançó que no pots identificar."
 ]
 
 import random
@@ -43,14 +42,16 @@ class SelectorAleatoriElements:
 
     def extreu_element_aleatori(self):
         if not self.elements:
-            self.elements, self.elements_usats = self.elements_usats, []
-        element_seleccionat = random.choice(self.elements)
-        self.elements.remove(element_seleccionat)
-        self.elements_usats.append(element_seleccionat)
-        return element_seleccionat
+            return None
+        if len(self.elements) == len(self.elements_usats):
+            self.elements_usats = []
+        element = random.choice(self.elements)
+        while element in self.elements_usats:
+            element = random.choice(self.elements)
+        self.elements_usats.append(element)
+        return element
 
     def reset(self):
-        self.elements.extend(self.elements_usats)
         self.elements_usats = []
 
 class GeneradorPistaSensacio:
@@ -67,7 +68,7 @@ class GeneradorPistaSensacio:
         pista = self.selector_pista.extreu_element_aleatori()
         sensacio = self.selector_sensacio.extreu_element_aleatori()
         return f"{pista} {sensacio}"
-    
+
 from enum import Enum
 
 class SortidaTrobada(Enum):
@@ -78,18 +79,18 @@ from abc import ABC, abstractmethod
 
 class Trobada(ABC):
     @abstractmethod
-    def corre_trobada(self):
+    def corre_trobada(self) -> SortidaTrobada:
         pass
 
 class TrobadaPerDefecte(Trobada):
     def __init__(self, pistes, sensacions):
         self.generador_pista_sensacio = GeneradorPistaSensacio(pistes, sensacions)
 
-    def corre_trobada(self):
+    def corre_trobada(self) -> SortidaTrobada:
         pista_sensacio = self.generador_pista_sensacio.obtenir_pista_sensacio()
         print(pista_sensacio)
         return SortidaTrobada.CONTINUA
-    
+
 class Habitacio:
     def __init__(self, nom, trobada):
         self.nom = nom
@@ -97,16 +98,15 @@ class Habitacio:
 
     def visita_habitacio(self):
         return self.trobada.corre_trobada()
-
+    
 habitacions = [
     Habitacio("Sala del Tron", TrobadaPerDefecte(pistes, sensacions)),
-    Habitacio("Torre de la Guaita", TrobadaPerDefecte(pistes, sensacions)),
-    Habitacio("Biblioteca Secreta", TrobadaPerDefecte(pistes, sensacions)),
+    Habitacio("Torre de la Princesa", TrobadaPerDefecte(pistes, sensacions)),
     Habitacio("Cova del Drac", TrobadaPerDefecte(pistes, sensacions)),
-    Habitacio("Laboratori Alquimista", TrobadaPerDefecte(pistes, sensacions)),
-    Habitacio("Capella Espectral", TrobadaPerDefecte(pistes, sensacions))
+    Habitacio("Biblioteca Encantada", TrobadaPerDefecte(pistes, sensacions)),
+    Habitacio("Jardí Secret", TrobadaPerDefecte(pistes, sensacions)),
+    Habitacio("Soterrani Obscur", TrobadaPerDefecte(pistes, sensacions))
 ]
-
 import random
 
 class Castell:
@@ -115,14 +115,14 @@ class Castell:
 
     def selecciona_porta(self):
         num_portes = random.randint(2, 4)
-        print(f"\nHi ha {num_portes} portes davant teu.")
+        print(f"\nHi ha {num_portes} portes. Selecciona una porta (1-{num_portes}):")
 
         while True:
-            eleccio = input(f"Selecciona una porta (1-{num_portes}): ")
-            if eleccio.isdigit() and 1 <= int(eleccio) <= num_portes:
-                return int(eleccio)
+            porta_seleccionada = input("> ")
+            if porta_seleccionada.isdigit() and 1 <= int(porta_seleccionada) <= num_portes:
+                return int(porta_seleccionada)
             else:
-                print("Entrada invàlida. Si us plau, intenta-ho de nou.")
+                print(f"Entrada invàlida. Si us plau, selecciona una porta (1-{num_portes}):")
 
     def habitacio_seguent(self):
         self.selecciona_porta()
@@ -138,17 +138,20 @@ class Joc:
         self.castell = Castell(habitacions)
 
     def jugar_joc(self):
-        print("Benvingut al joc! L'objectiu és navegar pel castell i trobar el tresor.\n")
+        print("\nBenvingut al Joc! L'objectiu és navegar pel castell i trobar el tresor.\n")
 
         while True:
-            resultat = self.castell.habitacio_seguent()
-            if resultat == SortidaTrobada.FI:
+            sortida = self.castell.habitacio_seguent()
+
+            if sortida == SortidaTrobada.FI:
                 self.castell.reset()
                 print("\nGame over. Vols explorar un castell diferent? (s/n)")
 
-                if input("> ").lower() != 's':
+                if input("> ").lower() != "s":
                     break
 
 #Engega el programa
 joc = Joc(habitacions)
 joc.jugar_joc()
+
+

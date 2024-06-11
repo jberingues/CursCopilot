@@ -7,7 +7,7 @@
 Elabora una llista de Python anomenada "pistes" que contingui 10 frases. Cada frase hauria d'insinuar esdeveniments passats, que van des de grans i intensos fins a subestimats i enigmàtics. Assegurat que aquestes pistes siguin prou versàtils com per ser aplicables a qualsevol entorn i estructurades en el format "Hi ha un...".
 
 
-Construeix una llista de Python anomenada "sensacions" amb 12 frases. Cadascuna ha de descriure una experiència sensorial (vista, so, olfacte, tacte, intuïció) que et podries trobar en una habitació d'un castell. Comença aquestes frases amb "Ho veus", "Escoltes", etc., amb l'objectiu de crear una atmosfera misteriosa i immersiva en un joc d'aventures basat en text.
+Construeix una llista de Python anomenada "sensacions" amb 12 elements. Cada element ha de descriure una experiència sensorial (vista, so, olfacte, tacte, intuïció) que et podries trobar en una habitació d'un castell. Comença aquestes frases amb "Ho veus", "Escoltes", etc. La frase ha de crear una atmosfera misteriosa i immersiva per un joc d'aventures basat en text.
 
 
 Crea una classe Python anomenada "SelectorAleatoriElements". La classe s'ha d'estructurar de la següent manera:
@@ -36,15 +36,14 @@ Segueix les directrius donades a continuació per definir la classe "GeneradorPi
 Crea una enumeració anomenada sortida_trobada que tingui "CONTINUA" i "FI" utilitzant el mòdul "enum" integrat de Python
 
 
-Crea una classe Trobada que hereta d'ABC fent-la una classe base abstracta. El mètode corre_trobada està decorat amb @abstractmethod, cosa que el converteix en un mètode abstracte. Això vol dir que qualsevol subclasse de Trobada ha de proporcionar una implementació de corre_trobada. El resultat de corre_trobada ha de retornar un SortidaTrobada.
+Crea una classe Trobada que hereta d'ABC fent-la una classe base abstracta. Té un mètode corre_trobada que està decorat amb @abstractmethod, cosa que el converteix en un mètode abstracte. Això vol dir que qualsevol subclasse de Trobada ha de proporcionar una implementació de corre_trobada. corre_trobada ha de retornar un SortidaTrobada.
 
 
-Crea una classe "TrobadaPerDefecte" que hereta de la classe base "Trobada". Quan s'inicialitzi, crearà una instància de GeneradorPistaSensacio i la passarà. 
+Crea una classe "TrobadaPerDefecte" heredada de la classe base "Trobada". Quan s'inicialitza, crea una instància de "GeneradorPistaSensacio" i la passes. 
 A la implementació "corre_trobada": 
-- Cridarà a “extreu_item_aleatori” des de la instància de GeneradorPistaSensacio que va crear quan es va inicialitzar. 
-- Prendrà la sortida de la crida a “extreu_item_aleatori”. 
-- Imprimirà el que es retorna des de “extreu_item_aleatori”. 
-- Tornarà SortidaTrobada.CONTINUA.
+- Crida a “obtenir_pista_sensacio” des de la instància de GeneradorPistaSensacio creada en la inicialització. 
+- Agafa la sortida de la crida a “obtenir_pista_sensacio” i la imprimeixes. 
+- Retorna SortidaTrobada.CONTINUA.
 
 
 Crea una classe Habitacio que tingui un nom i una trobada. La trobada i el nom de l’habitacio s'estableixen quan s'inicialitza la classe. La classe Habitacio tindrà un nom i una funció de membre visita_habitacio. Quan es crida a la funció membre visita_habitacio, es cridarà la funció corre_trobada de trobada i es retornarà el resultat.
