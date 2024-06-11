@@ -9,66 +9,66 @@
 
 import random
 
-# Define game options
-game_options = {
+# Defineix opcions de joc
+opcions_joc = {
     1: 'pedra',
     2: 'paper',
     3: 'tisores'
 }
 
-# Define game rules
-game_rules = {
+# Defineix regles de joc
+regles_joc = {
     'pedra': ['tisores'],
     'paper': ['pedra'],
     'tisores': ['paper']
 }
 
-# Define game results
-game_results = {
+# Defineix resultats de joc
+resultats_joc = {
     'win': 'Tu guanyes!',
     'lose': 'Tu perds!',
     'tie': 'Empat!'
 }   
 
-# Get user input for game option
-def get_user_input():
+# Obté entrada de l'usuari
+def obtenir_entrada_usuari():
     while True:
         try:
-            user_input = input('Introdueix un número (1-3): ')
-            if user_input.isdigit() and int(user_input) in game_options:
-                return game_options[int(user_input)]
+            entrada_usuari = input('Introdueix un número (1-3): ')
+            if entrada_usuari.isdigit() and int(entrada_usuari) in opcions_joc:
+                return opcions_joc[int(entrada_usuari)]
             else:
                 print('Entrada no vàlida. Si us plau, torna a intentar-ho.')
         except ValueError:
             print('Entrada no vàlida. Si us plau, torna a intentar-ho.')
 
-# Determine game result
-def get_game_result(user_option, computer_option)
-    if user_option == computer_option:
-        return game_results['tie']
-    elif computer_option in game_rules[user_option]:
-        return game_results['win']
+# Determina el resultat del joc
+def obtenir_resultat_joc(opcio_usuari, opcio_ordinador)
+    if opcio_usuari == opcio_ordinador:
+        return resultats_joc['tie']
+    elif opcio_ordinador in regles_joc[opcio_usuari]:
+        return resultats_joc['win']
     else:
-        return game_results['lose']
+        return resultats_joc['lose']
 
-# Display game results
-def display_game_results(game_result, user_option, computer_option):
-    print(f'Has triat {user_option}.')
-    print(f'L\'ordinador ha triat {computer_option}.')
-    print(game_result)
+# Mostra el resultat del joc
+def mostrar_resultats_joc(resultat_joc, opcio_usuari, opcio_ordinador):
+    print(f'Has triat {opcio_usuari}.')
+    print(f'L\'ordinador ha triat {opcio_ordinador}.')
+    print(resultat_joc)
 
-# Play the game
-def main():
+# Juga el joc
+def principal():
     print('Benvingut al joc de Pedra, Paper i Tisores!')
     while True:
-        user_option = get_user_input()
-        computer_option = random.choice(list(game_options.values()))
-        game_result = get_game_result(user_option, computer_option)
-        display_game_results(game_result, user_option, computer_option)
-        play_again = input('Vols jugar de nou? (sí/no): ')
-        if play_again.lower() != 'sí':
+        opcio_usuari = obtenir_entrada_usuari()
+        opcio_ordinador = random.choice(list(opcions_joc.values()))
+        resultat_joc = obtenir_resultat_joc(opcio_usuari, opcio_ordinador)
+        mostrar_resultats_joc(resultat_joc, opcio_usuari, opcio_ordinador)
+        jugar_de_nou = input('Vols jugar de nou? (sí/no): ')
+        if jugar_de_nou.lower() != 'sí':
             break
 
 if __name__ == '__main__':
-    main()
+    principal()
 
